@@ -3,106 +3,165 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GovDocs Formatter - 100% Private File Resizer</title>
-    <!-- Tailwind CSS for sleek UI -->
+    <title>GovSuite Hub - Private Document Tools</title>
+    <!-- Tailwind CSS for sleek SaaS UI -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Open-source libraries for client-side processing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans min-h-screen flex flex-col justify-between">
+<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
 
-    <!-- Header -->
-    <header class="bg-blue-600 text-white py-6 shadow-md">
-        <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold tracking-tight">🇮🇳 GovDocs Formatter</h1>
-            <span class="bg-blue-700 text-xs px-3 py-1.5 rounded-full font-medium flex items-center gap-1">
-                🔒 100% Private (No Uploads)
-            </span>
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-slate-900 text-white flex flex-col hidden md:flex">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                🏛️ GovSuite
+            </h1>
+            <p class="text-xs text-slate-400 mt-1">100% Local & Private</p>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="max-w-4xl w-full mx-auto px-4 py-8 flex-grow">
-        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 grid grid-cols-1 md:grid-cols-3 gap-6">
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ml-2">Active Tool</p>
+            <a href="#" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-xl transition-colors font-medium">
+                📄 Doc Formatter
+            </a>
             
-            <!-- Sidebar: Controls -->
-            <div class="md:col-span-1 space-y-6">
+            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-2 ml-2">Coming Soon</p>
+            <a href="#" class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 px-4 py-3 rounded-xl transition-colors text-sm">
+                🔏 PDF Signer
+            </a>
+            <a href="#" class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 px-4 py-3 rounded-xl transition-colors text-sm">
+                🛡️ ID Watermarker
+            </a>
+            <a href="#" class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 px-4 py-3 rounded-xl transition-colors text-sm">
+                📝 Auto-Form Filler
+            </a>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-800 p-3 rounded-lg flex items-start gap-3">
+                <span class="text-lg">🔒</span>
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-2">1. Choose Target Portal</label>
-                    <select id="portalPresets" class="w-full p-2.5 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        <option value="custom">Custom Dimensions</option>
-                        <option value="passport-photo">Passport Seva - Photo (3.5x4.5cm, <100KB)</option>
-                        <option value="passport-sign">Passport Seva - Signature (4.5x3.5cm, <100KB)</option>
-                        <option value="epfo-doc">EPFO Passbook/UAN - PDF (<200KB)</option>
-                        <option value="generic-pdf">Standard Portal - PDF (<500KB)</option>
-                    </select>
-                </div>
-
-                <div class="border-t border-gray-100 pt-4 space-y-4">
-                    <h3 class="text-sm font-semibold text-gray-700">2. Output Requirements</h3>
-                    
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">Max File Size</label>
-                        <div class="flex items-center gap-2">
-                            <input type="number" id="maxSize" value="200" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                            <span class="text-sm text-gray-500 font-medium">KB</span>
-                        </div>
-                    </div>
-
-                    <div id="dimensionInputs" class="grid grid-cols-2 gap-2">
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1">Width (px)</label>
-                            <input type="number" id="widthPx" value="800" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
-                        <div>
-                            <label class="block text-xs text-gray-500 mb-1">Height (px)</label>
-                            <input type="number" id="heightPx" value="1000" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs text-gray-500 mb-1">Convert To</label>
-                        <select id="outputFormat" class="w-full p-2 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                            <option value="application/pdf">PDF (.pdf)</option>
-                            <option value="image/jpeg">JPEG (.jpg)</option>
-                            <option value="image/png">PNG (.png)</option>
-                        </select>
-                    </div>
+                    <p class="text-xs font-medium text-white">Privacy First</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">Files never leave your device.</p>
                 </div>
             </div>
+        </div>
+    </aside>
 
-            <!-- Main Panel: File Dropper & Output -->
-            <div class="md:col-span-2 flex flex-col justify-between space-y-6">
-                <!-- Dropzone -->
-                <div id="dropzone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 transition-colors cursor-pointer bg-gray-50 flex flex-col items-center justify-center min-h-[220px]">
-                    <input type="file" id="fileInput" class="hidden" accept="image/*,application/pdf">
-                    <span class="text-4xl mb-3">📄</span>
-                    <p class="text-sm font-medium text-gray-700">Drag & drop your document here, or <span class="text-blue-600 underline">browse</span></p>
-                    <p class="text-xs text-gray-400 mt-1">Accepts PDFs, JPEGs, and PNGs</p>
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        
+        <!-- Mobile Header (Hidden on Desktop) -->
+        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold">🏛️ GovSuite</h1>
+            <span class="bg-blue-600 text-xs px-2 py-1 rounded-full">Doc Formatter</span>
+        </header>
+
+        <!-- Tool Workspace -->
+        <div class="p-6 lg:p-10 max-w-6xl mx-auto w-full flex-1">
+            
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-gray-900">Document Formatter</h2>
+                <p class="text-gray-500 mt-1">Resize, compress, and convert images and PDFs for strict government portal uploads.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Settings Panel -->
+                <div class="lg:col-span-1 space-y-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-2">1. Choose Target Portal</label>
+                        <select id="portalPresets" class="w-full p-2.5 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            <option value="custom">Custom Dimensions</option>
+                            <option value="passport-photo">Passport Seva - Photo (3.5x4.5cm, <100KB)</option>
+                            <option value="passport-sign">Passport Seva - Signature (4.5x3.5cm, <100KB)</option>
+                            <option value="epfo-doc">EPFO/UAN - PDF (<200KB)</option>
+                            <option value="generic-pdf">Standard Govt Portal - PDF (<500KB)</option>
+                        </select>
+                    </div>
+
+                    <div class="border-t border-gray-100 pt-5 space-y-4">
+                        <h3 class="text-sm font-semibold text-gray-700">2. Output Requirements</h3>
+                        
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Max File Size</label>
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="maxSize" value="200" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <span class="text-sm text-gray-500 font-medium">KB</span>
+                            </div>
+                        </div>
+
+                        <div id="dimensionInputs" class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">Width (px)</label>
+                                <input type="number" id="widthPx" value="800" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs text-gray-500 mb-1">Height (px)</label>
+                                <input type="number" id="heightPx" value="1000" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs text-gray-500 mb-1">Convert To</label>
+                            <select id="outputFormat" class="w-full p-2 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <option value="application/pdf">PDF (.pdf)</option>
+                                <option value="image/jpeg">JPEG (.jpg)</option>
+                                <option value="image/png">PNG (.png)</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Status / Progress -->
-                <div id="statusCard" class="hidden p-4 rounded-xl border flex items-center justify-between">
-                    <div>
-                        <p id="statusTitle" class="text-sm font-semibold"></p>
-                        <p id="statusMeta" class="text-xs text-gray-500 mt-0.5"></p>
+                <!-- Action Panel: Upload, Submit, Result -->
+                <div class="lg:col-span-2 flex flex-col space-y-6">
+                    
+                    <div class="flex items-center gap-2 mb-[-10px]">
+                        <h3 class="text-sm font-semibold text-gray-700">3. Upload & Process</h3>
                     </div>
-                    <a id="downloadBtn" class="hidden bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium shadow transition-colors cursor-pointer">
-                        📥 Download File
-                    </a>
+
+                    <!-- Dropzone -->
+                    <div id="dropzone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 hover:bg-blue-50 transition-all cursor-pointer bg-gray-50 flex flex-col items-center justify-center min-h-[180px]">
+                        <input type="file" id="fileInput" class="hidden" accept="image/*,application/pdf">
+                        
+                        <div id="dropzoneEmpty">
+                            <span class="text-4xl mb-3 block">📥</span>
+                            <p class="text-sm font-medium text-gray-700">Drag & drop your document here, or <span class="text-blue-600 underline">browse</span></p>
+                            <p class="text-xs text-gray-400 mt-1">Accepts PDFs, JPEGs, and PNGs</p>
+                        </div>
+
+                        <!-- Active File State -->
+                        <div id="dropzoneActive" class="hidden flex flex-col items-center">
+                            <span class="text-4xl mb-2 block">📄</span>
+                            <p id="selectedFileName" class="text-sm font-bold text-gray-800 break-all"></p>
+                            <p id="selectedFileSize" class="text-xs text-gray-500 mt-1"></p>
+                            <p class="text-xs text-blue-600 underline mt-3">Click to change file</p>
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button id="processBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Format & Process Document
+                    </button>
+
+                    <!-- Status / Progress -->
+                    <div id="statusCard" class="hidden p-5 rounded-xl border flex flex-col md:flex-row items-start md:items-center justify-between gap-4 transition-all">
+                        <div>
+                            <p id="statusTitle" class="text-sm font-bold"></p>
+                            <p id="statusMeta" class="text-xs mt-1"></p>
+                        </div>
+                        <a id="downloadBtn" class="hidden whitespace-nowrap bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow transition-colors cursor-pointer">
+                            📥 Download Ready
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- Footer Note -->
-    <footer class="bg-gray-100 text-center py-4 text-xs text-gray-500 border-t border-gray-200">
-        <p>Your documents never leave your computer. All rendering, compression, and resizing happen strictly in-browser.</p>
-    </footer>
-
-    <!-- Logic Script -->
+    <!-- App Logic -->
     <script>
+        // DOM Elements
         const dropzone = document.getElementById('dropzone');
         const fileInput = document.getElementById('fileInput');
         const portalPresets = document.getElementById('portalPresets');
@@ -111,16 +170,25 @@
         const heightInput = document.getElementById('heightPx');
         const formatSelect = document.getElementById('outputFormat');
         
+        const dropzoneEmpty = document.getElementById('dropzoneEmpty');
+        const dropzoneActive = document.getElementById('dropzoneActive');
+        const selectedFileName = document.getElementById('selectedFileName');
+        const selectedFileSize = document.getElementById('selectedFileSize');
+        
+        const processBtn = document.getElementById('processBtn');
         const statusCard = document.getElementById('statusCard');
         const statusTitle = document.getElementById('statusTitle');
         const statusMeta = document.getElementById('statusMeta');
         const downloadBtn = document.getElementById('downloadBtn');
 
+        // State
+        let currentFile = null;
+
         // Presets handling
         portalPresets.addEventListener('change', (e) => {
             const val = e.target.value;
             if (val === 'passport-photo') {
-                maxSizeInput.value = 100; widthInput.value = 413; heightInput.value = 531; // 3.5x4.5cm at 300 DPI approx
+                maxSizeInput.value = 100; widthInput.value = 413; heightInput.value = 531;
                 formatSelect.value = 'image/jpeg';
             } else if (val === 'passport-sign') {
                 maxSizeInput.value = 100; widthInput.value = 531; heightInput.value = 413;
@@ -131,39 +199,66 @@
             }
         });
 
-        // Event Listeners for Upload
+        // UI Updates for File Selection
+        function updateFileUI(file) {
+            currentFile = file;
+            dropzoneEmpty.classList.add('hidden');
+            dropzoneActive.classList.remove('hidden');
+            selectedFileName.innerText = file.name;
+            selectedFileSize.innerText = `Original size: ${(file.size / 1024).toFixed(1)} KB`;
+            processBtn.disabled = false;
+            
+            // Reset status area
+            statusCard.classList.add('hidden');
+            downloadBtn.classList.add('hidden');
+        }
+
+        // File Input Listeners
         dropzone.addEventListener('click', () => fileInput.click());
         dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-blue-500', 'bg-blue-50'); });
         dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-blue-500', 'bg-blue-50'); });
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropzone.classList.remove('border-blue-500', 'bg-blue-50');
-            if (e.dataTransfer.files.length) handleFile(e.dataTransfer.files[0]);
+            if (e.dataTransfer.files.length) updateFileUI(e.dataTransfer.files[0]);
         });
         fileInput.addEventListener('change', (e) => {
-            if (e.target.files.length) handleFile(e.target.files[0]);
+            if (e.target.files.length) updateFileUI(e.target.files[0]);
         });
 
-        async function handleFile(file) {
-            showStatus('Processing...', 'Running compression math strictly on your device...', 'info');
+        // Submit Button Logic
+        processBtn.addEventListener('click', async () => {
+            if (!currentFile) return;
+            
+            // UI state during processing
+            processBtn.disabled = true;
+            processBtn.innerText = "Processing Document...";
+            showStatus('⏳ Processing...', 'Running local conversion engines on your device. Please wait.', 'info');
             
             const targetSizeKB = parseInt(maxSizeInput.value);
             const targetFormat = formatSelect.value;
             
             try {
                 if (targetFormat.includes('image')) {
-                    await processImage(file, targetSizeKB);
+                    await processImage(currentFile, targetSizeKB);
                 } else if (targetFormat === 'application/pdf') {
-                    await processPdf(file, targetSizeKB);
+                    await processPdf(currentFile, targetSizeKB);
                 }
             } catch (error) {
                 console.error(error);
-                showStatus('Error Processing File', 'Something went wrong during local processing. Ensure the file isn\'t password protected.', 'error');
+                showStatus('❌ Error Processing File', error.message || 'Something went wrong. Ensure the file isn\'t password protected.', 'error');
+            } finally {
+                processBtn.disabled = false;
+                processBtn.innerText = "Format & Process Document";
             }
-        }
+        });
 
-        // Image optimization algorithm
+        // Processing Engines (Same as previous version)
         async function processImage(file, maxKB) {
+            if (file.type === 'application/pdf') {
+                throw new Error("Cannot convert PDF to Image client-side directly. Please upload an image source.");
+            }
+
             let options = {
                 maxSizeMB: maxKB / 1024,
                 maxWidthOrHeight: Math.max(parseInt(widthInput.value), parseInt(heightInput.value)),
@@ -171,31 +266,23 @@
                 fileType: formatSelect.value
             };
 
-            // If incoming file is a PDF, we cannot easily parse it to an image natively in plain client JS without heavy weights like pdf.js
-            if (file.type === 'application/pdf') {
-                throw new Error("Converting PDF to Image entirely client-side requires heavy binary dependency wrappers. Please upload a source image.");
-            }
-
             const compressedFile = await imageCompression(file, options);
-            setupDownload(compressedFile, `formatted_${Date.now()}.${formatSelect.value.split('/')[1]}`);
+            setupDownload(compressedFile, `GovSuite_${Date.now()}.${formatSelect.value.split('/')[1]}`);
         }
 
-        // PDF Optimization using pdf-lib (Compressing by stripping structural bloat or embedding optimization)
         async function processPdf(file, maxKB) {
             let fileArrayBuffer;
             
             if (file.type.includes('image')) {
-                // Wrap image into a new clean PDF container
                 const pdfDoc = await PDFLib.PDFDocument.create();
                 const imageBytes = await file.arrayBuffer();
                 let embeddedImg = file.type === 'image/png' ? await pdfDoc.embedPng(imageBytes) : await pdfDoc.embedJpg(imageBytes);
                 
-                const page = pdfDoc.addPage([parseInt(widthInput.value) || 595, parseInt(heightInput.value) || 842]); // Defaults to A4 if empty
+                const page = pdfDoc.addPage([parseInt(widthInput.value) || 595, parseInt(heightInput.value) || 842]);
                 page.drawImage(embeddedImg, { x: 0, y: 0, width: page.getWidth(), height: page.getHeight() });
                 
                 fileArrayBuffer = await pdfDoc.save();
             } else {
-                // If it is already a PDF, read it, copy it to strip structural unreferenced objects (garbage collection compression)
                 const srcBytes = await file.arrayBuffer();
                 const srcDoc = await PDFLib.PDFDocument.load(srcBytes);
                 const pdfDoc = await PDFLib.PDFDocument.create();
@@ -208,26 +295,28 @@
             const blob = new Blob([fileArrayBuffer], { type: 'application/pdf' });
             
             if (blob.size / 1024 > maxKB) {
-                showStatus('Warning: Size Limit Strictness', `Compressed to ${(blob.size / 1024).toFixed(1)}KB. If this exceeds your ${maxKB}KB limit, consider resizing dimensions lower or using an optimized black-and-white scan baseline.`, 'warning', blob);
+                showStatus('⚠️ Size Warning', `Compressed to ${(blob.size / 1024).toFixed(1)}KB, which is above your ${maxKB}KB limit. Try lowering dimensions.`, 'warning', blob);
             } else {
-                setupDownload(blob, `formatted_${Date.now()}.pdf`);
+                setupDownload(blob, `GovSuite_${Date.now()}.pdf`);
             }
         }
 
+        // Status and Download UI handlers
         function showStatus(title, message, type, optionalBlob = null) {
-            statusCard.classList.remove('hidden', 'bg-blue-50', 'border-blue-200', 'bg-green-50', 'border-green-200', 'bg-red-50', 'border-red-200', 'bg-yellow-50', 'border-yellow-200');
+            statusCard.classList.remove('hidden', 'bg-blue-50', 'border-blue-200', 'text-blue-900', 'bg-green-50', 'border-green-200', 'text-green-900', 'bg-red-50', 'border-red-200', 'text-red-900', 'bg-yellow-50', 'border-yellow-200', 'text-yellow-900');
             downloadBtn.classList.add('hidden');
+            statusMeta.classList.remove('text-blue-700', 'text-green-700', 'text-red-700', 'text-yellow-700');
 
-            if (type === 'info') statusCard.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-800');
-            if (type === 'success') statusCard.classList.add('bg-green-50', 'border-green-200', 'text-green-800');
-            if (type === 'warning') statusCard.classList.add('bg-yellow-50', 'border-yellow-200', 'text-yellow-800');
-            if (type === 'error') statusCard.classList.add('bg-red-50', 'border-red-200', 'text-red-800');
+            if (type === 'info') { statusCard.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-900'); statusMeta.classList.add('text-blue-700'); }
+            if (type === 'success') { statusCard.classList.add('bg-green-50', 'border-green-200', 'text-green-900'); statusMeta.classList.add('text-green-700'); }
+            if (type === 'warning') { statusCard.classList.add('bg-yellow-50', 'border-yellow-200', 'text-yellow-900'); statusMeta.classList.add('text-yellow-700'); }
+            if (type === 'error') { statusCard.classList.add('bg-red-50', 'border-red-200', 'text-red-900'); statusMeta.classList.add('text-red-700'); }
 
             statusTitle.innerText = title;
             statusMeta.innerText = message;
 
             if (optionalBlob) {
-                setupDownload(optionalBlob, `formatted_${Date.now()}.pdf`, false);
+                setupDownload(optionalBlob, `GovSuite_${Date.now()}.pdf`, false);
             }
         }
 
@@ -238,7 +327,7 @@
             downloadBtn.classList.remove('hidden');
             
             if (isPerfectSuccess) {
-                showStatus('✨ Success!', `File optimization complete! Output size: ${(blob.size / 1024).toFixed(1)} KB`, 'success');
+                showStatus('✨ Success!', `File is ready! Final size: ${(blob.size / 1024).toFixed(1)} KB`, 'success');
                 downloadBtn.classList.remove('hidden');
             }
         }
