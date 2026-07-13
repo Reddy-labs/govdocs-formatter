@@ -4,45 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GovSuite Hub - Private Document Tools</title>
+    
+    <!-- Zero-Dependency Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+
     <!-- Tailwind CSS for sleek SaaS UI -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Open-source libraries for client-side processing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/browser-image-compression@2.0.2/dist/browser-image-compression.min.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans h-screen flex overflow-hidden">
+<body class="bg-slate-950 text-slate-300 font-sans h-screen flex overflow-hidden selection:bg-emerald-500 selection:text-white">
 
     <!-- Sidebar Navigation -->
-    <aside class="w-64 bg-slate-900 text-white flex flex-col hidden md:flex">
+    <aside class="w-64 bg-black border-r border-slate-800 flex flex-col hidden md:flex">
         <div class="p-6 border-b border-slate-800">
-            <h1 class="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+            <h1 class="text-2xl font-black tracking-tight flex items-center gap-2 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
                 🏛️ GovSuite
             </h1>
-            <p class="text-xs text-slate-400 mt-1">100% Local & Private</p>
+            <p class="text-xs text-slate-500 mt-1">100% Local & Private</p>
         </div>
         <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-2 ml-2">Active Tool</p>
-            <a href="#" class="flex items-center gap-3 bg-blue-600 text-white px-4 py-3 rounded-xl transition-colors font-medium">
+            <p class="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 ml-2">Active Tool</p>
+            <a href="#" class="flex items-center gap-3 bg-gradient-to-r from-emerald-600/20 to-blue-600/20 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl transition-colors font-medium shadow-[0_0_15px_rgba(16,185,129,0.1)]">
                 📄 Doc Formatter
             </a>
             
-            <p class="text-xs font-semibold text-slate-500 uppercase tracking-wider mt-6 mb-2 ml-2">Coming Soon</p>
-            <a href="#" class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 px-4 py-3 rounded-xl transition-colors text-sm">
+            <p class="text-xs font-semibold text-slate-600 uppercase tracking-wider mt-6 mb-2 ml-2">Coming Soon</p>
+            <a href="#" class="flex items-center gap-3 text-slate-500 hover:text-slate-300 hover:bg-slate-900 px-4 py-3 rounded-xl transition-colors text-sm">
                 🔏 PDF Signer
             </a>
-            <a href="#" class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 px-4 py-3 rounded-xl transition-colors text-sm">
-                🛡️ ID Watermarker
-            </a>
-            <a href="#" class="flex items-center gap-3 text-slate-400 hover:bg-slate-800 px-4 py-3 rounded-xl transition-colors text-sm">
+            <a href="#" class="flex items-center gap-3 text-slate-500 hover:text-slate-300 hover:bg-slate-900 px-4 py-3 rounded-xl transition-colors text-sm">
                 📝 Auto-Form Filler
             </a>
         </nav>
         <div class="p-4 border-t border-slate-800">
-            <div class="bg-slate-800 p-3 rounded-lg flex items-start gap-3">
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex items-start gap-3">
                 <span class="text-lg">🔒</span>
                 <div>
-                    <p class="text-xs font-medium text-white">Privacy First</p>
-                    <p class="text-[10px] text-slate-400 mt-0.5">Files never leave your device.</p>
+                    <p class="text-xs font-medium text-slate-300">Privacy First</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">No servers. Zero data leaks.</p>
                 </div>
             </div>
         </div>
@@ -51,27 +52,27 @@
     <!-- Main Content Area -->
     <main class="flex-1 flex flex-col h-full overflow-y-auto">
         
-        <!-- Mobile Header (Hidden on Desktop) -->
-        <header class="md:hidden bg-slate-900 text-white p-4 flex justify-between items-center shadow-md">
-            <h1 class="text-xl font-bold">🏛️ GovSuite</h1>
-            <span class="bg-blue-600 text-xs px-2 py-1 rounded-full">Doc Formatter</span>
+        <!-- Mobile Header -->
+        <header class="md:hidden bg-black border-b border-slate-800 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">🏛️ GovSuite</h1>
+            <span class="bg-emerald-900/50 border border-emerald-700 text-emerald-400 text-xs px-2 py-1 rounded-full">Doc Formatter</span>
         </header>
 
         <!-- Tool Workspace -->
         <div class="p-6 lg:p-10 max-w-6xl mx-auto w-full flex-1">
             
             <div class="mb-8">
-                <h2 class="text-3xl font-bold text-gray-900">Document Formatter</h2>
-                <p class="text-gray-500 mt-1">Resize, compress, and convert images and PDFs for strict government portal uploads.</p>
+                <h2 class="text-3xl font-bold text-white">Document Formatter</h2>
+                <p class="text-slate-400 mt-1">Resize, compress, and heavily watermark your IDs for strict government portal uploads.</p>
             </div>
 
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-200 grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="bg-slate-900 p-6 rounded-2xl shadow-xl border border-slate-800 grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Settings Panel -->
                 <div class="lg:col-span-1 space-y-6">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">1. Choose Target Portal</label>
-                        <select id="portalPresets" class="w-full p-2.5 border border-gray-300 rounded-lg bg-gray-50 text-sm focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                        <label class="block text-sm font-semibold text-slate-300 mb-2">1. Choose Target Portal</label>
+                        <select id="portalPresets" class="w-full p-2.5 border border-slate-700 rounded-lg bg-slate-950 text-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 outline-none transition-all">
                             <option value="custom">Custom Dimensions</option>
                             <option value="passport-photo">Passport Seva - Photo (3.5x4.5cm, <100KB)</option>
                             <option value="passport-sign">Passport Seva - Signature (4.5x3.5cm, <100KB)</option>
@@ -80,35 +81,47 @@
                         </select>
                     </div>
 
-                    <div class="border-t border-gray-100 pt-5 space-y-4">
-                        <h3 class="text-sm font-semibold text-gray-700">2. Output Requirements</h3>
+                    <div class="border-t border-slate-800 pt-5 space-y-4">
+                        <h3 class="text-sm font-semibold text-slate-300">2. Output Requirements</h3>
                         
                         <div>
-                            <label class="block text-xs text-gray-500 mb-1">Max File Size</label>
+                            <label class="block text-xs text-slate-500 mb-1">Max File Size</label>
                             <div class="flex items-center gap-2">
-                                <input type="number" id="maxSize" value="200" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
-                                <span class="text-sm text-gray-500 font-medium">KB</span>
+                                <input type="number" id="maxSize" value="200" class="w-full p-2 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
+                                <span class="text-sm text-slate-500 font-medium">KB</span>
                             </div>
                         </div>
 
                         <div id="dimensionInputs" class="grid grid-cols-2 gap-3">
                             <div>
-                                <label class="block text-xs text-gray-500 mb-1">Width (px)</label>
-                                <input type="number" id="widthPx" value="800" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <label class="block text-xs text-slate-500 mb-1">Width (px)</label>
+                                <input type="number" id="widthPx" value="800" class="w-full p-2 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                             </div>
                             <div>
-                                <label class="block text-xs text-gray-500 mb-1">Height (px)</label>
-                                <input type="number" id="heightPx" value="1000" class="w-full p-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                                <label class="block text-xs text-slate-500 mb-1">Height (px)</label>
+                                <input type="number" id="heightPx" value="1000" class="w-full p-2 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-xs text-gray-500 mb-1">Convert To</label>
-                            <select id="outputFormat" class="w-full p-2 border border-gray-300 rounded-lg bg-white text-sm focus:ring-2 focus:ring-blue-500 outline-none">
+                            <label class="block text-xs text-slate-500 mb-1">Convert To</label>
+                            <select id="outputFormat" class="w-full p-2 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none">
                                 <option value="application/pdf">PDF (.pdf)</option>
                                 <option value="image/jpeg">JPEG (.jpg)</option>
                                 <option value="image/png">PNG (.png)</option>
                             </select>
+                        </div>
+                    </div>
+
+                    <!-- Watermarking Feature -->
+                    <div class="border-t border-slate-800 pt-5 space-y-4">
+                        <h3 class="text-sm font-semibold text-emerald-400 flex items-center gap-2">
+                            🛡️ Security (New)
+                        </h3>
+                        <div>
+                            <label class="block text-xs text-slate-500 mb-1">Add Watermark (PDFs Only)</label>
+                            <input type="text" id="watermarkText" placeholder="e.g., Submitted for KYC only" class="w-full p-2 border border-slate-700 rounded-lg bg-slate-950 text-white text-sm focus:ring-2 focus:ring-emerald-500 outline-none placeholder-slate-600">
+                            <p class="text-[10px] text-slate-500 mt-1">Stamps diagonally across the document to prevent misuse.</p>
                         </div>
                     </div>
                 </div>
@@ -116,34 +129,34 @@
                 <!-- Action Panel: Upload, Submit, Result -->
                 <div class="lg:col-span-2 flex flex-col space-y-6">
                     
-                    <div class="flex items-center gap-2 mb-4">
-                        <h3 class="text-lg font-extrabold bg-gradient-to-r from-black via-green-600 to-blue-600 bg-clip-text text-transparent">
+                    <div class="flex items-center gap-2 mb-2">
+                        <h3 class="text-lg font-extrabold bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-500 bg-clip-text text-transparent">
                             3. Upload & Process
                         </h3>
                     </div>
 
                     <!-- Dropzone -->
-                    <div id="dropzone" class="border-2 border-dashed border-gray-300 rounded-xl p-8 text-center hover:border-blue-500 hover:bg-blue-50 transition-all cursor-pointer bg-gray-50 flex flex-col items-center justify-center min-h-[180px]">
+                    <div id="dropzone" class="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center hover:border-emerald-500 hover:bg-slate-800/50 transition-all cursor-pointer bg-slate-950 flex flex-col items-center justify-center min-h-[180px]">
                         <input type="file" id="fileInput" class="hidden" accept="image/*,application/pdf">
                         
                         <div id="dropzoneEmpty">
-                            <span class="text-4xl mb-3 block">📥</span>
-                            <p class="text-sm font-medium text-gray-700">Drag & drop your document here, or <span class="text-blue-600 underline">browse</span></p>
-                            <p class="text-xs text-gray-400 mt-1">Accepts PDFs, JPEGs, and PNGs</p>
+                            <span class="text-4xl mb-3 block opacity-80">📥</span>
+                            <p class="text-sm font-medium text-slate-300">Drag & drop your document here, or <span class="text-emerald-400 underline">browse</span></p>
+                            <p class="text-xs text-slate-600 mt-2">Accepts PDFs, JPEGs, and PNGs</p>
                         </div>
 
                         <!-- Active File State -->
                         <div id="dropzoneActive" class="hidden flex flex-col items-center">
                             <span class="text-4xl mb-2 block">📄</span>
-                            <p id="selectedFileName" class="text-sm font-bold text-gray-800 break-all"></p>
-                            <p id="selectedFileSize" class="text-xs text-gray-500 mt-1"></p>
-                            <p class="text-xs text-blue-600 underline mt-3">Click to change file</p>
+                            <p id="selectedFileName" class="text-sm font-bold text-white break-all"></p>
+                            <p id="selectedFileSize" class="text-xs text-slate-500 mt-1"></p>
+                            <p class="text-xs text-emerald-400 hover:text-emerald-300 underline mt-3">Click to change file</p>
                         </div>
                     </div>
 
-                    <!-- Submit Button -->
-                    <button id="processBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>
-                        Format & Process Document
+                    <!-- Gradient Submit Button -->
+                    <button id="processBtn" class="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600 hover:opacity-90 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        Format & Secure Document
                     </button>
 
                     <!-- Status / Progress -->
@@ -152,7 +165,7 @@
                             <p id="statusTitle" class="text-sm font-bold"></p>
                             <p id="statusMeta" class="text-xs mt-1"></p>
                         </div>
-                        <a id="downloadBtn" class="hidden whitespace-nowrap bg-gray-900 hover:bg-black text-white px-5 py-2.5 rounded-lg text-sm font-semibold shadow transition-colors cursor-pointer">
+                        <a id="downloadBtn" class="hidden whitespace-nowrap bg-white hover:bg-slate-200 text-slate-900 px-5 py-2.5 rounded-lg text-sm font-bold shadow transition-colors cursor-pointer">
                             📥 Download Ready
                         </a>
                     </div>
@@ -171,6 +184,7 @@
         const widthInput = document.getElementById('widthPx');
         const heightInput = document.getElementById('heightPx');
         const formatSelect = document.getElementById('outputFormat');
+        const watermarkInput = document.getElementById('watermarkText');
         
         const dropzoneEmpty = document.getElementById('dropzoneEmpty');
         const dropzoneActive = document.getElementById('dropzoneActive');
@@ -210,18 +224,17 @@
             selectedFileSize.innerText = `Original size: ${(file.size / 1024).toFixed(1)} KB`;
             processBtn.disabled = false;
             
-            // Reset status area
             statusCard.classList.add('hidden');
             downloadBtn.classList.add('hidden');
         }
 
         // File Input Listeners
         dropzone.addEventListener('click', () => fileInput.click());
-        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-blue-500', 'bg-blue-50'); });
-        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-blue-500', 'bg-blue-50'); });
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-emerald-500', 'bg-slate-900'); });
+        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('border-emerald-500', 'bg-slate-900'); });
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
-            dropzone.classList.remove('border-blue-500', 'bg-blue-50');
+            dropzone.classList.remove('border-emerald-500', 'bg-slate-900');
             if (e.dataTransfer.files.length) updateFileUI(e.dataTransfer.files[0]);
         });
         fileInput.addEventListener('change', (e) => {
@@ -232,7 +245,6 @@
         processBtn.addEventListener('click', async () => {
             if (!currentFile) return;
             
-            // UI state during processing
             processBtn.disabled = true;
             processBtn.innerText = "Processing Document...";
             showStatus('⏳ Processing...', 'Running local conversion engines on your device. Please wait.', 'info');
@@ -242,6 +254,9 @@
             
             try {
                 if (targetFormat.includes('image')) {
+                    if (watermarkInput.value.trim() !== '') {
+                        showStatus('⚠️ Note on Watermarks', 'Watermarking is currently optimized for PDF outputs. The image will be resized but not watermarked.', 'warning');
+                    }
                     await processImage(currentFile, targetSizeKB);
                 } else if (targetFormat === 'application/pdf') {
                     await processPdf(currentFile, targetSizeKB);
@@ -251,11 +266,11 @@
                 showStatus('❌ Error Processing File', error.message || 'Something went wrong. Ensure the file isn\'t password protected.', 'error');
             } finally {
                 processBtn.disabled = false;
-                processBtn.innerText = "Format & Process Document";
+                processBtn.innerText = "Format & Secure Document";
             }
         });
 
-        // Processing Engines (Same as previous version)
+        // Processing Engines
         async function processImage(file, maxKB) {
             if (file.type === 'application/pdf') {
                 throw new Error("Cannot convert PDF to Image client-side directly. Please upload an image source.");
@@ -274,6 +289,7 @@
 
         async function processPdf(file, maxKB) {
             let fileArrayBuffer;
+            const watermark = watermarkInput.value.trim();
             
             if (file.type.includes('image')) {
                 const pdfDoc = await PDFLib.PDFDocument.create();
@@ -283,6 +299,7 @@
                 const page = pdfDoc.addPage([parseInt(widthInput.value) || 595, parseInt(heightInput.value) || 842]);
                 page.drawImage(embeddedImg, { x: 0, y: 0, width: page.getWidth(), height: page.getHeight() });
                 
+                applyWatermark(pdfDoc, watermark);
                 fileArrayBuffer = await pdfDoc.save();
             } else {
                 const srcBytes = await file.arrayBuffer();
@@ -291,6 +308,7 @@
                 const copiedPages = await pdfDoc.copyPages(srcDoc, srcDoc.getPageIndices());
                 copiedPages.forEach((page) => pdfDoc.addPage(page));
                 
+                applyWatermark(pdfDoc, watermark);
                 fileArrayBuffer = await pdfDoc.save();
             }
 
@@ -303,16 +321,33 @@
             }
         }
 
+        // Apply Watermark Logic
+        function applyWatermark(pdfDoc, text) {
+            if (!text) return;
+            const pages = pdfDoc.getPages();
+            pages.forEach(page => {
+                const { width, height } = page.getSize();
+                page.drawText(text, {
+                    x: width / 6,
+                    y: height / 4,
+                    size: 40,
+                    color: PDFLib.rgb(0.3, 0.3, 0.3), // Dark Gray
+                    opacity: 0.5,
+                    rotate: PDFLib.degrees(45),
+                });
+            });
+        }
+
         // Status and Download UI handlers
         function showStatus(title, message, type, optionalBlob = null) {
-            statusCard.classList.remove('hidden', 'bg-blue-50', 'border-blue-200', 'text-blue-900', 'bg-green-50', 'border-green-200', 'text-green-900', 'bg-red-50', 'border-red-200', 'text-red-900', 'bg-yellow-50', 'border-yellow-200', 'text-yellow-900');
+            statusCard.classList.remove('hidden', 'bg-slate-800', 'border-slate-700', 'text-slate-300', 'bg-emerald-950', 'border-emerald-800', 'text-emerald-400', 'bg-red-950', 'border-red-800', 'text-red-400', 'bg-yellow-950', 'border-yellow-800', 'text-yellow-400');
             downloadBtn.classList.add('hidden');
-            statusMeta.classList.remove('text-blue-700', 'text-green-700', 'text-red-700', 'text-yellow-700');
+            statusMeta.classList.remove('text-slate-400', 'text-emerald-500', 'text-red-500', 'text-yellow-500');
 
-            if (type === 'info') { statusCard.classList.add('bg-blue-50', 'border-blue-200', 'text-blue-900'); statusMeta.classList.add('text-blue-700'); }
-            if (type === 'success') { statusCard.classList.add('bg-green-50', 'border-green-200', 'text-green-900'); statusMeta.classList.add('text-green-700'); }
-            if (type === 'warning') { statusCard.classList.add('bg-yellow-50', 'border-yellow-200', 'text-yellow-900'); statusMeta.classList.add('text-yellow-700'); }
-            if (type === 'error') { statusCard.classList.add('bg-red-50', 'border-red-200', 'text-red-900'); statusMeta.classList.add('text-red-700'); }
+            if (type === 'info') { statusCard.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300'); statusMeta.classList.add('text-slate-400'); }
+            if (type === 'success') { statusCard.classList.add('bg-emerald-950', 'border-emerald-800', 'text-emerald-400'); statusMeta.classList.add('text-emerald-500'); }
+            if (type === 'warning') { statusCard.classList.add('bg-yellow-950', 'border-yellow-800', 'text-yellow-400'); statusMeta.classList.add('text-yellow-500'); }
+            if (type === 'error') { statusCard.classList.add('bg-red-950', 'border-red-800', 'text-red-400'); statusMeta.classList.add('text-red-500'); }
 
             statusTitle.innerText = title;
             statusMeta.innerText = message;
