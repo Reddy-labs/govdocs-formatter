@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Statement Unlocker - GovSuite Hub</title>
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <!-- pdf-lib for building the new PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    
+    <!-- pdf.js for decrypting and reading the locked PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Set the worker for pdf.js to process the heavy decryption in the background
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-300 font-sans h-screen flex overflow-hidden selection:bg-emerald-500 selection:text-white">
+
+    <!-- Sidebar Navigation -->
+    <aside class="w-64 bg-black border-r border-slate-800 flex flex-col hidden md:flex">
+        <div class="p-6 border-b border-slate-800">
+            <h1 class="text-2xl font-black tracking-tight flex items-center gap-2 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
+                🏛️ GovSuite
+            </h1>
+            <p class="text-xs text-slate-500 mt-1">100% Local & Private</p>
+        </div>
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <p class="text-xs font-semibold text-slate-600 uppercase tracking-wider mb-2 ml-2">Tools</p>
+            
+            <a href="index.html" class="flex items-center gap-3 text-slate-500 hover:text-slate-300 hover:bg-slate-900 px-4 py-3 rounded-xl transition-colors text-sm font-medium">
+                📄 Doc Formatter
+            </a>
+            <a href="signer.html" class="flex items-center gap-3 text-slate-500 hover:text-slate-300 hover:bg-slate-900 px-4 py-3 rounded-xl transition-colors text-sm font-medium">
+                🔏 PDF Signer
+            </a>
+            <a href="watermark.html" class="flex items-center gap-3 text-slate-500 hover:text-slate-300 hover:bg-slate-900 px-4 py-3 rounded-xl transition-colors text-sm font-medium">
+                🛡️ ID Watermarker
+            </a>
+            <!-- Active Tool -->
+            <a href="unlocker.html" class="flex items-center gap-3 bg-gradient-to-r from-emerald-600/20 to-blue-600/20 border border-emerald-500/30 text-emerald-400 px-4 py-3 rounded-xl transition-colors font-medium shadow-[0_0_15px_rgba(16,185,129,0.1)]">
+                🔓 PDF Unlocker
+            </a>
+            
+            <p class="text-xs font-semibold text-slate-600 uppercase tracking-wider mt-6 mb-2 ml-2">Coming Soon</p>
+            <a href="#" class="flex items-center gap-3 text-slate-500 hover:text-slate-300 hover:bg-slate-900 px-4 py-3 rounded-xl transition-colors text-sm">
+                📝 Auto-Form Filler
+            </a>
+        </nav>
+        <div class="p-4 border-t border-slate-800">
+            <div class="bg-slate-900 border border-slate-800 p-3 rounded-lg flex items-start gap-3">
+                <span class="text-lg">🔒</span>
+                <div>
+                    <p class="text-xs font-medium text-slate-300">Privacy First</p>
+                    <p class="text-[10px] text-slate-500 mt-0.5">Passwords never leave your device.</p>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 flex flex-col h-full overflow-y-auto">
+        <header class="md:hidden bg-black border-b border-slate-800 text-white p-4 flex justify-between items-center shadow-md">
+            <h1 class="text-xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">🏛️ GovSuite</h1>
+            <span class="bg-emerald-900/50 border border-emerald-700 text-emerald-400 text-xs px-2 py-1 rounded-full">PDF Unlocker</span>
+        </header>
+
+        <div class="p-6 lg:p-10 max-w-4xl mx-auto w-full flex-1">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-white">Bank Statement Unlocker</h2>
+                <p class="text-slate-400 mt-1">Remove bank passwords and output a clean, portal-ready PDF. Processed strictly locally.</p>
+            </div>
+
+            <div class="bg-slate-900 p-6 md:p-8 rounded-2xl shadow-xl border border-slate-800 flex flex-col gap-6">
+                
+                <!-- Step 1: Upload -->
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 mb-3">1. Select Password-Protected PDF</h3>
+                    <div id="dropzone" class="border-2 border-dashed border-slate-700 rounded-xl p-8 text-center hover:border-emerald-500 hover:bg-slate-800/50 transition-all cursor-pointer bg-slate-950 flex flex-col items-center justify-center min-h-[160px]">
+                        <input type="file" id="fileInput" class="hidden" accept="application/pdf">
+                        
+                        <div id="dropzoneEmpty">
+                            <span class="text-4xl mb-3 block opacity-80">🔐</span>
+                            <p class="text-sm font-medium text-slate-300">Drop your locked bank statement here</p>
+                        </div>
+
+                        <div id="dropzoneActive" class="hidden flex flex-col items-center">
+                            <span class="text-4xl mb-2 block text-emerald-400">📄</span>
+                            <p id="selectedFileName" class="text-sm font-bold text-white break-all text-center"></p>
+                            <p class="text-xs text-emerald-400 hover:text-emerald-300 underline mt-3">Click to swap file</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2: Password -->
+                <div>
+                    <h3 class="text-sm font-semibold text-slate-300 mb-3">2. Enter Document Password</h3>
+                    <input type="password" id="docPassword" placeholder="e.g., your PAN + Date of Birth" class="w-full p-4 border border-slate-700 rounded-xl bg-slate-950 text-white text-md focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <p class="text-xs text-slate-500 mt-2">Required. Your password is securely used in your browser memory and immediately discarded.</p>
+                </div>
+
+                <!-- Process Button -->
+                <div class="pt-4 border-t border-slate-800">
+                    <button id="processBtn" class="w-full bg-gradient-to-r from-emerald-500 via-teal-500 to-blue-600 hover:opacity-90 text-white font-bold py-4 rounded-xl shadow-[0_0_20px_rgba(16,185,129,0.3)] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2" disabled>
+                        <span>🔓</span> Unlock & Flatten Document
+                    </button>
+                    <p class="text-xs text-center text-slate-500 mt-3">Note: Flattening makes the document tamper-proof (images) but increases file size. Use the Doc Formatter next if it's too large.</p>
+                </div>
+
+                <!-- Status & Output -->
+                <div id="statusCard" class="hidden p-5 rounded-xl border flex flex-col items-center text-center gap-3 transition-all mt-2">
+                    <div>
+                        <p id="statusTitle" class="text-sm font-bold"></p>
+                        <p id="statusMeta" class="text-xs mt-1"></p>
+                    </div>
+                    <a id="downloadBtn" class="hidden w-full max-w-sm bg-white hover:bg-slate-200 text-slate-900 px-5 py-3 rounded-lg text-sm font-bold shadow transition-colors cursor-pointer text-center">
+                        📥 Download Unlocked PDF
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const dropzoneEmpty = document.getElementById('dropzoneEmpty');
+        const dropzoneActive = document.getElementById('dropzoneActive');
+        const selectedFileName = document.getElementById('selectedFileName');
+        
+        const passwordInput = document.getElementById('docPassword');
+        const processBtn = document.getElementById('processBtn');
+        const statusCard = document.getElementById('statusCard');
+        const statusTitle = document.getElementById('statusTitle');
+        const statusMeta = document.getElementById('statusMeta');
+        const downloadBtn = document.getElementById('downloadBtn');
+
+        let currentFile = null;
+
+        // UI Handlers
+        function updateFileUI(file) {
+            if(file.type !== 'application/pdf') {
+                showStatus('❌ Invalid File', 'Please select a PDF document.', 'error');
+                return;
+            }
+            currentFile = file;
+            dropzoneEmpty.classList.add('hidden');
+            dropzoneActive.classList.remove('hidden');
+            selectedFileName.innerText = file.name;
+            checkReadyState();
+            statusCard.classList.add('hidden');
+        }
+
+        function checkReadyState() {
+            processBtn.disabled = !(currentFile && passwordInput.value.trim().length > 0);
+        }
+
+        passwordInput.addEventListener('input', checkReadyState);
+
+        dropzone.addEventListener('click', () => fileInput.click());
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-emerald-500'); });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-emerald-500'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('border-emerald-500');
+            if (e.dataTransfer.files.length) updateFileUI(e.dataTransfer.files[0]);
+        });
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) updateFileUI(e.target.files[0]);
+        });
+
+        // Core Unlock & Flatten Logic
+        processBtn.addEventListener('click', async () => {
+            if (!currentFile || !passwordInput.value) return;
+            
+            processBtn.disabled = true;
+            processBtn.innerHTML = "<span>⏳</span> Decrypting and Flattening (This may take a moment)...";
+            
+            try {
+                const fileBytes = await currentFile.arrayBuffer();
+                const pwd = passwordInput.value;
+
+                // 1. Attempt to open with pdf.js using the password
+                const loadingTask = pdfjsLib.getDocument({ data: fileBytes, password: pwd });
+                let pdfDoc;
+                
+                try {
+                    pdfDoc = await loadingTask.promise;
+                } catch (e) {
+                    if (e.name === 'PasswordException') {
+                        throw new Error("Incorrect password. Please try again.");
+                    }
+                    throw e;
+                }
+
+                showStatus('⏳ Flattening...', `Rendering ${pdfDoc.numPages} pages...`, 'info');
+
+                // 2. Create a clean, brand new PDF using pdf-lib
+                const newPdf = await PDFLib.PDFDocument.create();
+                
+                // 3. Render each page to an image, then stamp into the new PDF
+                for (let i = 1; i <= pdfDoc.numPages; i++) {
+                    const page = await pdfDoc.getPage(i);
+                    // Scale 2.0 keeps the text crisp when zooming in
+                    const viewport = page.getViewport({ scale: 2.0 });
+                    
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = viewport.width;
+                    canvas.height = viewport.height;
+                    
+                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
+                    
+                    // Compress to JPEG to keep file size reasonable
+                    const imgData = canvas.toDataURL('image/jpeg', 0.85);
+                    const imgBytes = await fetch(imgData).then(res => res.arrayBuffer());
+                    
+                    const embeddedImage = await newPdf.embedJpg(imgBytes);
+                    
+                    // Add page matching original dimensions
+                    const newPage = newPdf.addPage([viewport.width / 2.0, viewport.height / 2.0]);
+                    newPage.drawImage(embeddedImage, {
+                        x: 0,
+                        y: 0,
+                        width: viewport.width / 2.0,
+                        height: viewport.height / 2.0
+                    });
+                }
+
+                // 4. Output the new clean PDF
+                const cleanPdfBytes = await newPdf.save();
+                const cleanBlob = new Blob([cleanPdfBytes], { type: 'application/pdf' });
+                
+                setupDownload(cleanBlob, `Unlocked_${currentFile.name}`);
+                
+            } catch (error) {
+                console.error(error);
+                showStatus('❌ Decryption Failed', error.message || 'Unable to process this file.', 'error');
+            } finally {
+                processBtn.disabled = false;
+                processBtn.innerHTML = "<span>🔓</span> Unlock & Flatten Document";
+            }
+        });
+
+        // Status Handlers
+        function showStatus(title, message, type) {
+            statusCard.classList.remove('hidden', 'bg-slate-800', 'border-slate-700', 'text-slate-300', 'bg-emerald-950', 'border-emerald-800', 'text-emerald-400', 'bg-red-950', 'border-red-800', 'text-red-400');
+            downloadBtn.classList.add('hidden');
+            statusMeta.classList.remove('text-slate-400', 'text-emerald-500', 'text-red-500');
+
+            if (type === 'info') { statusCard.classList.add('bg-slate-800', 'border-slate-700', 'text-slate-300'); statusMeta.classList.add('text-slate-400'); }
+            if (type === 'success') { statusCard.classList.add('bg-emerald-950', 'border-emerald-800', 'text-emerald-400'); statusMeta.classList.add('text-emerald-500'); }
+            if (type === 'error') { statusCard.classList.add('bg-red-950', 'border-red-800', 'text-red-400'); statusMeta.classList.add('text-red-500'); }
+
+            statusTitle.innerText = title;
+            statusMeta.innerText = message;
+        }
+
+        function setupDownload(blob, filename) {
+            const url = URL.createObjectURL(blob);
+            downloadBtn.href = url;
+            downloadBtn.download = filename;
+            downloadBtn.classList.remove('hidden');
+            showStatus('✨ Success!', `Document unlocked securely. Final Size: ${(blob.size / 1024 / 1024).toFixed(2)} MB.`, 'success');
+        }
+    </script>
+</body>
+</html>
